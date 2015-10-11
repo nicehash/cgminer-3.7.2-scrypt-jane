@@ -54,7 +54,7 @@ cgminer_SOURCES += adl.c adl.h adl_functions.h
 cgminer_SOURCES += *.cl
 
 if HAS_SCRYPT
-cgminer_SOURCES += scrypt.c scrypt.h
+cgminer_SOURCES += scrypt.c scrypt.h scrypt-jane.c scrypt-jane.h
 endif
 
 endif

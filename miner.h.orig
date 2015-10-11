@@ -412,7 +412,6 @@ enum cl_kernels {
 	KL_DIAKGCN,
 	KL_DIABLO,
 	KL_SCRYPT,
-	KL_SCRYPT_JANE,
 };
 
 enum dev_reason {
@@ -1107,11 +1106,6 @@ extern int opt_queue;
 extern int opt_scantime;
 extern int opt_expiry;
 
-/* scrypt-jane */
-extern unsigned int sj_minNf;
-extern unsigned int sj_maxNf;
-extern unsigned int sj_startTime;
-
 #ifdef USE_USBUTILS
 extern pthread_mutex_t cgusb_lock;
 extern pthread_mutex_t cgusbres_lock;
@@ -1205,7 +1199,6 @@ extern struct cgpu_info gpus[MAX_GPUDEVICES];
 extern int gpu_threads;
 #ifdef USE_SCRYPT
 extern bool opt_scrypt;
-extern bool opt_scrypt_jane;
 #else
 #define opt_scrypt (0)
 #endif
@@ -1651,7 +1644,5 @@ extern struct api_data *api_add_volts(struct api_data *root, char *name, float *
 extern struct api_data *api_add_hs(struct api_data *root, char *name, double *data, bool copy_data);
 extern struct api_data *api_add_diff(struct api_data *root, char *name, double *data, bool copy_data);
 extern struct api_data *api_add_percent(struct api_data *root, char *name, double *data, bool copy_data);
-
-extern unsigned char sj_GetNfactor(int nTimestamp);
 
 #endif /* __MINER_H__ */

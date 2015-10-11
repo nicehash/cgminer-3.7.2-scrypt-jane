@@ -403,7 +403,13 @@ _clState *initCl(unsigned int gpu, char *name, size_t nameSize)
 	if (cgpu->kernel == KL_NONE) {
 		if (opt_scrypt) {
 			applog(LOG_INFO, "Selecting scrypt kernel");
-			clState->chosen_kernel = KL_SCRYPT;
+			if (opt_scrypt_jane) {
+				applog(LOG_INFO, "Selected scrypt-jane kernel");
+				clState->chosen_kernel = KL_SCRYPT_JANE;
+			} else {
+				applog(LOG_INFO, "Selected standard scrypt kernel");
+				clState->chosen_kernel = KL_SCRYPT;
+			}
 		} else if (!strstr(name, "Tahiti") &&
 			/* Detect all 2.6 SDKs not with Tahiti and use diablo kernel */
 			(strstr(vbuff, "844.4") ||  // Linux 64 bit ATI 2.6 SDK
@@ -472,6 +478,12 @@ _clState *initCl(unsigned int gpu, char *name, size_t nameSize)
 			case KL_SCRYPT:
 				strcpy(filename, SCRYPT_KERNNAME".cl");
 				strcpy(binaryfilename, SCRYPT_KERNNAME);
+				/* Scrypt only supports vector 1 */
+				cgpu->vwidth = 1;
+				break;
+			case KL_SCRYPT_JANE:
+				strcpy(filename, SCRYPT_JANE_KERNNAME".cl");
+				strcpy(binaryfilename, SCRYPT_JANE_KERNNAME);
 				/* Scrypt only supports vector 1 */
 				cgpu->vwidth = 1;
 				break;
